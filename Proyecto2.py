@@ -3,6 +3,10 @@
 
 from PIL import Image
 from math import cos, sin, pi
+
+import tkinter as tk
+img = Image.new("RGB", (300, 300))
+
  
 
 def get_line(p0, p1):
@@ -47,12 +51,10 @@ def get_line(p0, p1):
 
 def draw_line(image, p0, p1):
     for pixel in get_line(p0, p1):
-        image.putpixel(pixel, (49, 210, 232, 91))
+        image.putpixel(pixel, (255, 255, 255, 100))
     
 def draw_octagon(x,y,r):
     
-    img = Image.new("RGB", (1280, 720))
-
     rad = (pi/180)*45
 
     for i in range(8):
@@ -62,12 +64,9 @@ def draw_octagon(x,y,r):
         y1 = int(y + r * sin(rad*(i+1)))
 
         draw_line(img, (x0,y0), (x1,y1))
-
-    img.show()
+    img.save(fp="images/canvas.jpg")
 
 def draw_diamond(x,y,r):
-    
-    img = Image.new("RGB", (1280, 720))
 
     rad = (pi/180)*90
 
@@ -79,12 +78,10 @@ def draw_diamond(x,y,r):
 
         draw_line(img, (x0,y0), (x1,y1))
 
-    img.show()
+    img.save(fp="images/canvas.jpg")
 
 def draw_triangle(x,y,r):
     
-    img = Image.new("RGB", (1280, 720))
-
     rad = (pi/180)*120
 
     for i in range(3):
@@ -95,19 +92,38 @@ def draw_triangle(x,y,r):
 
         draw_line(img, (x0,y0), (x1,y1))
 
-    img.show()
+    
 
 def draw_rectangle():
         
-        img = Image.new("RGB", (1280, 720))
-        draw_line(img, (1000,500),(300,500))
-        draw_line(img, (300,500),(300,100))
-        draw_line(img, (300,100),(1000,100))
-        draw_line(img, (1000,100),(1000,500))
-
-        img.show()
+    draw_line(img, (1000,500),(300,500))
+    draw_line(img, (300,500),(300,100))
+    draw_line(img, (300,100),(1000,100))
+    draw_line(img, (1000,100),(1000,500))
 
 
 
-draw_rectangle()
 
+
+img.save(fp="images/canvas.jpg")
+
+window = tk.Tk()
+window.geometry("600x400")
+
+label1 = tk.Label(window, text="Hello", bg="red", fg="white" )
+label1.pack(fill=tk.X)
+
+canvas = tk.Canvas(window, width = 300, height = 300)
+canvas.pack(side= tk.BOTTOM)  
+
+boton_octagono = tk.Button(window, text="Octagono", bg="black", fg="white", command = lambda: draw_octagon(150,150,75))
+boton_octagono.pack(side=tk.LEFT)
+
+boton_rombo = tk.Button(window, text="rombo",  bg="black", fg="white", command = lambda: draw_diamond(150,150,75))
+boton_rombo.pack(side=tk.LEFT)
+
+boton_rectangulo = tk.Button(window, text="rectangulo",  bg="black", fg="white", command = lambda: draw_rectangle())
+boton_rectangulo.pack(side=tk.LEFT)
+
+
+window.mainloop()
