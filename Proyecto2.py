@@ -8,29 +8,112 @@ import tkinter as tk
 global imgtk
 
 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+GREEN = (18,140,53,55)
+BLUE = (4,6,140,55)
+RED = (219,0,0,86)
 
 
 
-window = tk.Tk()
-window.geometry("600x400")
+root = tk.Tk()
+root.geometry("600x400")
 
-label1 = tk.Label(window, text="Hello", bg="red", fg="white" )
+def color_choice(x):
+    return x
+
+def clicker_octagon():
+    global pop
+    pop = tk.Toplevel(root)
+    pop.title("Elige un color")
+    pop.geometry("250x150")
+
+    pop_label = tk.Label(pop, text="Elige un color")
+    pop_label.pack(pady=10)
+
+    my_frame = tk.Frame(pop, bg="white")
+    my_frame.pack(pady=5)
+
+    color_verde = tk.Button(my_frame, text="   ", bg="green", command = lambda: draw_octagon(150,150,75,GREEN))
+    color_verde.grid(row=0, column=1)
+    color_azul = tk.Button(my_frame, text="   ", bg="blue", command= lambda: draw_octagon(150,150,75,BLUE))
+    color_azul.grid(row=0, column=2)
+    color_rojo = tk.Button(my_frame, text="   ", bg="red", command= lambda: draw_octagon(150,150,75,RED))
+    color_rojo.grid(row=0, column=3)
+
+
+def clicker_diamond():
+    global pop
+    pop = tk.Toplevel(root)
+    pop.title("Elige un color")
+    pop.geometry("250x150")
+
+    pop_label = tk.Label(pop, text="Elige un color")
+    pop_label.pack(pady=10)
+
+    my_frame = tk.Frame(pop, bg="white")
+    my_frame.pack(pady=5)
+
+    color_verde = tk.Button(my_frame, text="   " , bg="green", command = lambda: draw_diamond(150,150,75,GREEN))
+    color_verde.grid(row=0, column=1)
+    color_azul = tk.Button(my_frame, text="   ", bg="blue", command= lambda: draw_diamond(150,150,75,BLUE))
+    color_azul.grid(row=0, column=2)    
+    color_rojo = tk.Button(my_frame, text="   ", bg="red", command= lambda: draw_diamond(150,150,75,RED))
+    color_rojo.grid(row=0, column=3)
+
+def clicker_square():
+    global pop
+    pop = tk.Toplevel(root)
+    pop.title("Elige un color")
+    pop.geometry("250x150")
+
+    pop_label = tk.Label(pop, text="Elige un color")
+    pop_label.pack(pady=10)
+
+    my_frame = tk.Frame(pop, bg="white")
+    my_frame.pack(pady=5)
+
+    color_verde = tk.Button(my_frame, text="   ", bg="green", command = lambda: draw_square(GREEN))
+    color_verde.grid(row=0, column=1)
+    color_azul = tk.Button(my_frame, text="   ", bg="blue", command= lambda: draw_square(BLUE))
+    color_azul.grid(row=0, column=2)    
+    color_rojo = tk.Button(my_frame, text="   ", bg="red", command= lambda: draw_square(RED))
+    color_rojo.grid(row=0, column=3)
+
+def clicker_triangle():
+    global pop
+    pop = tk.Toplevel(root)
+    pop.title("Elige un color")
+    pop.geometry("250x150")
+
+    pop_label = tk.Label(pop, text="Elige un color")
+    pop_label.pack(pady=10)
+
+    my_frame = tk.Frame(pop, bg="white")
+    my_frame.pack(pady=5)
+
+    color_verde = tk.Button(my_frame, text="   " , bg="green", command = lambda: draw_triangle(150,150,75,GREEN))
+    color_verde.grid(row=0, column=1)
+    color_azul = tk.Button(my_frame, text="   ", bg="blue", command= lambda: draw_triangle(150,150,75,BLUE))
+    color_azul.grid(row=0, column=2)    
+    color_rojo = tk.Button(my_frame, text="   ", bg="red", command= lambda: draw_triangle(150,150,75,RED))
+    color_rojo.grid(row=0, column=3)
+
+label1 = tk.Label(root, text="Elige una figura", bg="black", fg="white" )
 label1.pack(fill=tk.X)
 
-canvas = tk.Canvas(window, width = 300, height = 300)
+canvas = tk.Canvas(root, width = 300, height = 300)
 canvas.pack(side= tk.BOTTOM)  
   
-boton_octagono = tk.Button(window, text="Octagono", bg="black", fg="white", command = lambda: draw_octagon(150,150,75))
+boton_octagono = tk.Button(root, text="Octagono", bg="black", fg="white", command = lambda: clicker_octagon())
 boton_octagono.pack(side=tk.LEFT)
 
-boton_rombo = tk.Button(window, text="rombo",  bg="black", fg="white", command = lambda: draw_diamond(150,150,75))
+boton_rombo = tk.Button(root, text="rombo",  bg="black", fg="white", command = lambda: clicker_diamond())
 boton_rombo.pack(side=tk.LEFT)
 
-boton_rectangulo = tk.Button(window, text="rectangulo",  bg="black", fg="white", command = lambda: draw_square())
-boton_rectangulo.pack(side=tk.LEFT)
+boton_cuadrado = tk.Button(root, text="cuadrado",  bg="black", fg="white", command = lambda: clicker_square())
+boton_cuadrado.pack(side=tk.LEFT)
+
+boton_triangulo = tk.Button(root, text="triangulo",  bg="black", fg="white", command = lambda: clicker_triangle())
+boton_triangulo.pack(side=tk.LEFT)
 
 
 def get_line(p0, p1):
@@ -94,7 +177,9 @@ def draw_line(image, p0, p1):
     for pixel in get_line(p0, p1):
         image.putpixel(pixel, (255, 255, 255, 100))
     
-def draw_octagon(x,y,r):
+def draw_octagon(x,y,r,color):
+
+    pop.destroy()
 
     img = Image.new("RGB", (300, 300))
 
@@ -109,7 +194,7 @@ def draw_octagon(x,y,r):
 
         draw_line(img, (x0,y0), (x1,y1))
 
-    dfs(img,150,150,RED)
+    dfs(img,150,150,color)
     img.save(fp="images/octagon.jpg")
 
     imgtk = ImageTk.PhotoImage(Image.open("images/octagon.jpg"))
@@ -117,7 +202,9 @@ def draw_octagon(x,y,r):
     canvas.image = imgtk 
 
 
-def draw_diamond(x,y,r):
+def draw_diamond(x,y,r, color):
+
+    pop.destroy()
 
     img = Image.new("RGB", (300, 300))
 
@@ -132,13 +219,15 @@ def draw_diamond(x,y,r):
 
         draw_line(img, (x0,y0), (x1,y1))
     
-    dfs(img,150,150,RED)
+    dfs(img,150,150,color)
     img.save(fp="images/diamond.jpg")
     imgtk = ImageTk.PhotoImage(Image.open("images/diamond.jpg"))
     canvas.create_image(20,20, anchor=tk.NW, image=imgtk) 
     canvas.image = imgtk
 
-def draw_triangle(x,y,r):
+def draw_triangle(x,y,r,color):
+
+    pop.destroy()
 
     img = Image.new("RGB", (300, 300))
 
@@ -153,14 +242,16 @@ def draw_triangle(x,y,r):
 
         draw_line(img, (x0,y0), (x1,y1))
 
-    dfs(img,150,150,RED)
+    dfs(img,150,150,color)
     img.save(fp="images/triangle.jpg")
-    imgtk = ImageTk.PhotoImage(Image.open("images/octagon.jpg"))
+    imgtk = ImageTk.PhotoImage(Image.open("images/triangle.jpg"))
     canvas.create_image(20,20, anchor=tk.NW, image=imgtk) 
     canvas.image = imgtk
     
 
-def draw_square():
+def draw_square(color):
+
+    pop.destroy()
 
     img = Image.new("RGB", (300, 300))
 
@@ -169,11 +260,11 @@ def draw_square():
     draw_line(img, (75,225),(75,75))
     draw_line(img, (75,75),(225,75))
     draw_line(img, (225,75),(225,225))
-    dfs(img,150,150,RED)
+    dfs(img,150,150,color)
     img.save(fp="images/square.jpg")
     imgtk = ImageTk.PhotoImage(Image.open("images/square.jpg"))
     canvas.create_image(20,20, anchor=tk.NW, image=imgtk) 
     canvas.image = imgtk
 
 
-window.mainloop()
+root.mainloop()
